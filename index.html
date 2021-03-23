@@ -1,0 +1,27 @@
+<html>
+<head>
+    <title>Admin Page</title>
+</head>
+<style>
+    .container{
+        float: left;
+        position: relative;
+        margin-left: 220px;
+        width: calc(100% - 230px);
+        border: 1px solid #EEEDE7;
+        height: 90.5%;
+        padding: 5px;
+    }
+</style>
+<body>
+<div id="admin">
+    <header-component></header-component>
+    <div class="container">
+        <router-view></router-view>
+    </div>
+</div>
+</body>
+<footer>
+    <script src="http://localhost:9020/js/admin.js"></script>
+</footer>
+</html>
