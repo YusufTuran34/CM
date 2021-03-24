@@ -6,6 +6,7 @@ import usersComponent from "./component/usersComponent";
 import dashboardComponent from "./component/dashboardComponent";
 import navbarItemsComponent from "./component/navbarItemsComponent";
 import settingsComponent from "./component/settingsComponent";
+import pagesComponent from "./component/pagesComponent";
 
 Vue.use(Router)
 
@@ -27,6 +28,10 @@ const router = new Router({
             path: '/settings',
             component: settingsComponent
         },
+        {
+            path: '/pages',
+            component: pagesComponent
+        },
     ]
 })
 
@@ -36,9 +41,9 @@ new Vue({
     store,
     components : {headerComponent,usersComponent,dashboardComponent},
     created() {
-        this.$store.dispatch('getUsers')
-        this.$store.dispatch('getNavbars')
-        this.$store.dispatch('getSettings')
-        this.$store.dispatch('getPages')
+        // this.$store.dispatch('getUsers')
+        // this.$store.dispatch('getNavbars')
+        // this.$store.dispatch('getSettings')
+        // this.$store.dispatch('getPages')
     },
 });

@@ -1,9 +1,10 @@
 package com.model;
 
+import java.util.HashMap;
+
 public class Content {
     private String html_desktop;
-    private String html_mobile;
-    private String html_tablet;
+    private HashMap usedComponent;
     private String html_mini;
 
     public String getHtml_desktop() {
@@ -14,27 +15,19 @@ public class Content {
         this.html_desktop = html_desktop;
     }
 
-    public String getHtml_mobile() {
-        return html_mobile;
-    }
-
-    public void setHtml_mobile(String html_mobile) {
-        this.html_mobile = html_mobile;
-    }
-
-    public String getHtml_tablet() {
-        return html_tablet;
-    }
-
-    public void setHtml_tablet(String html_tablet) {
-        this.html_tablet = html_tablet;
-    }
-
     public String getHtml_mini() {
         return html_mini;
     }
 
     public void setHtml_mini(String html_mini) {
         this.html_mini = html_mini;
+    }
+
+    public HashMap getUsedComponent() {
+        return usedComponent;
+    }
+
+    public void setUsedComponent(HashMap usedComponent) {
+        this.usedComponent = usedComponent;
     }
 }

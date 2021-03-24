@@ -9,6 +9,9 @@ export const store = new Vuex.Store({
     navbars : null,
     settings : null,
     pages : null,
+
+
+    element:null,
   },
   mutations: {
     getUsers (state,users) {
@@ -24,6 +27,9 @@ export const store = new Vuex.Store({
       state.pages = pages;
     },
 
+    getReadyCreateElement(state,element){
+      state.element = element;
+    }
 
   },
   actions: {
@@ -65,6 +71,12 @@ export const store = new Vuex.Store({
       generalFunction.performPut(navbar,"http://localhost:9020/header/",function (response){
         thatContext.commit('getSettings', thatSettings)
       })
+    },
+
+
+
+    setReadyCreateElement(context,element){
+      context.commit('getReadyCreateElement', element)
     }
   },
   getters: {
@@ -79,6 +91,10 @@ export const store = new Vuex.Store({
     },
     getPages: state => {
       return state.pages
+    },
+
+    getReadyCreateElement : state => {
+      return state.element;
     }
   }
 })

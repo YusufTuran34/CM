@@ -7,6 +7,7 @@
     <router-link to="/user" tag="a">User</router-link>
     <router-link to="/navbar" tag="a">Navbar</router-link>
     <router-link to="/settings" tag="a">Settings</router-link>
+    <router-link to="/pages" tag="a">Pages</router-link>
   </div>
 </template>
 
