@@ -12,6 +12,7 @@ export const store = new Vuex.Store({
 
 
     element:null,
+    readyToDelete:false,
   },
   mutations: {
     getUsers (state,users) {
