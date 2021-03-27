@@ -1,22 +1,42 @@
 <template>
   <div>
     <div class="aside">
-      <label>Grid System</label>
-      <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-12','subElement' : [] }])">12</div>
-      <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-6', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-6', 'subElement' : [] }])">6 : 6</div>
-      <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-8', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-4', 'subElement' : [] }])">8 : 4</div>
-      <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-4', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-4', 'subElement' : [] },{ 'el': 'div','class' : 'col-sm-4', 'subElement' : [] }])">4 : 4 : 4</div>
-      <div @click="addElement([{ 'el': 'label', 'text'  : 'Label' }])"> Label </div>
-      <div @click="addElement([{ 'el': 'p',     'text'  : 'paragraf' }])"> Paragraf </div>
-      <div @click="addElement([{ 'el': 'legend','html'  : 'Custom' }])"> Summernote </div>
-      <div @click="deleteModeTrigger"> Delete  </div>
+      <section>
+        <label>Grid System</label>
+        <div @click="addElement([{ 'el': 'div',   'class' : 'row','subElement' : [] }])">Satır</div>
+        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-12','subElement' : [] }])">12</div>
+        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-6', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-6', 'subElement' : [] }])">6 : 6</div>
+        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-8', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-4', 'subElement' : [] }])">8 : 4</div>
+        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-4', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-8', 'subElement' : [] }])">4 : 8</div>
+        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-2', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-10', 'subElement' : [] }])">2 : 10</div>
+        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-10', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-2', 'subElement' : [] }])">10 : 2</div>
+        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-4', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-4', 'subElement' : [] },{ 'el': 'div','class' : 'col-sm-4', 'subElement' : [] }])">4 : 4 : 4</div>
+        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-3', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-3', 'subElement' : [] },{ 'el': 'div','class' : 'col-sm-3', 'subElement' : [] },{ 'el': 'div','class' : 'col-sm-3', 'subElement' : [] }])">3 : 3 : 3 : 3</div>
+      </section>
+      <section>
+        <label>Html</label>
+        <div @click="addElement([{ 'el': 'label', 'text'  : 'Label' }])"> Label </div>
+        <div @click="addElement([{ 'el': 'p',     'text'  : 'paragraf' }])"> Paragraf </div>
+        <div @click="addElement([{ 'el': 'img',   'src'   : 'https://via.placeholder.com/150' }])"> Img </div>
+      </section>
+      <section>
+        <label>Component</label>
+        <div @click="addElement([{ 'el': 'legend','html'  : 'Custom' }])"> Summernote </div>
+        <div @click="addElement([{ 'el': 'bulten'}])"> Bulten </div>
+        <div @click="addElement([{ 'el': 'breadCrumb', 'urlList' : [{'url' : '/' , 'name' : 'Anasayfa'}]}])"> Bread Crumb </div>
+        <div @click="addElement([{ 'el': 'slider','slider': {'someList':[ { 'html': 'slide1', 'style': { 'background': '#1bbc9b' } } ] ,'options' : {'currentPage': 0} } }])"> Slider </div>
+        <div @click="addElement([{ 'el': 'recentpost','blogList' : [{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}},{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}},{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}}] }])"> Recent Post </div>
+      </section>
+
+      <div class="deleteEnable" @click="deleteModeTrigger"> Delete  </div>
+      <div class="updateEnable" @click="update"> Update  </div>
 
     </div>
 
     <div :class="[readyForAddElement != null ? 'preview-active' : 'preview']">
-      <html-object :elements="elements" @remove-item="removeItem" @click-item="clickedItem" @text-change="textChange"></html-object>
+      <html-object :elements="elements" @src-change="textChange" @remove-item="removeItem" @click-item="clickedItem" @text-change="textChange"></html-object>
     </div>
-    <div v-show="selectedItem != null && selectedItem.el != 'legend'">
+    <div v-show="selectedItem != null && (selectedItem.el == 'label' || selectedItem.el == 'p')">
       <div id="input-edit-popup" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -27,6 +47,40 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-primary" @click="saveText">Save changes</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-show="selectedItem != null && (selectedItem.el == 'img')">
+      <div id="input-img-popup" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+              <input v-model="text">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" @click="saveImg">Save changes</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-show="selectedItem != null && (selectedItem.el == 'breadCrumb')">
+      <div id="input-bread-crumb-popup" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+              <input v-model="text">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" @click="saveImg">Save changes</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </div>
@@ -50,15 +104,19 @@
         </div>
       </div>
     </div>
+    <div v-show="selectedItem != null && selectedItem.el == 'bulten'">
+
+    </div>
   </div>
 </template>
 
 <script>
-console.log("19");
+import BultenComponent from "./general/bultenComponent";
+console.log("32");
 import HtmlObject from "./pageGame/htmlObject";
 export default {
   name: "pagesComponent",
-  components: {HtmlObject},
+  components: {BultenComponent, HtmlObject},
   data:function (){
     return {
       elements : [
@@ -87,6 +145,7 @@ export default {
     }
   },
   methods:{
+    update(){},
     deleteModeTrigger(){
       if(!this.$store.state.readyToDelete){
         setTimeout(function (){
@@ -136,14 +195,23 @@ export default {
     textChange(item){
       if(item.el == 'legend'){
         $("#legend-edit-popup").modal('show')
-      }else{
+      }else if(item.el == 'p' || item.el == 'label'){
         $("#input-edit-popup").modal('show')
+      }else if(item.el == 'img'){
+        $("#input-img-popup").modal('show')
+      }else if(item.el == 'breadCrumb'){
+        $("#input-bread-crumb-popup").modal('show')
       }
       this.selectedItem = item;
     },
 
     saveText(){
       this.selectedItem.text = this.text;
+      this.selectedItem = null;
+      this.text = null;
+    },
+    saveImg(){
+      this.selectedItem.src = this.text;
       this.selectedItem = null;
       this.text = null;
     },
@@ -170,14 +238,54 @@ export default {
 </script>
 
 <style>
+  .aside .deleteEnable{
+    width: 46%;
+    float: left;
+    margin-left:  2%;
+    margin-right: 2%;
+    margin-top: 5px;
+    border: 4px solid red;
+    text-align: center;
+  }
+  .aside .updateEnable{
+    width: 46%;
+    float: left;
+    margin-left:  2%;
+    margin-right: 2%;
+    margin-top: 5px;
+    border: 4px solid red;
+    text-align: center;
+  }
+  .aside div{
+    width: 100%;
+    margin: 2px;
+  }
+  .aside div::before {
+    content: "-   ";
+  }
+  .aside label{
+    width: 100%;
+    border-bottom: 1px solid red;
+  }
+  .aside section{
+    width: 45%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    float: left;
+    position: relative;
+  }
   .preview{
     border: 1px solid black;
     width: 100%;
+    float: left;
+    position: relative;
     min-height: 75%;
   }
   .preview-active{
     border: 2px solid black;
     width: 100%;
+    float: left;
+    position: relative;
     min-height: 75%;
   }
   .preview-active .container{
