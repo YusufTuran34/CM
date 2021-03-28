@@ -4,7 +4,7 @@ var webpack = require('webpack')
 module.exports = {
   watch: true,
   entry: {
-    admin : './jsVendor/admin.js',
+    admin : './vendor/js/admin.js',
   },
   output: {
     path: path.resolve(__dirname, './src/main/resources/static/js/'),

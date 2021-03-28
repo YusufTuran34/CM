@@ -77,8 +77,6 @@ public class DocumentHelper {
         Document document = new Document();
         if(document != null){
             document.append("html_desktop",content.getHtml_desktop());
-            document.append("html_mobile",content.getHtml_mobile());
-            document.append("html_tablet",content.getHtml_tablet());
             document.append("html_mini",content.getHtml_mini());
         }
         return document;

@@ -41,9 +41,9 @@ new Vue({
     store,
     components : {headerComponent,usersComponent,dashboardComponent},
     created() {
-        // this.$store.dispatch('getUsers')
-        // this.$store.dispatch('getNavbars')
-        // this.$store.dispatch('getSettings')
-        // this.$store.dispatch('getPages')
+        this.$store.dispatch('getUsers')
+        this.$store.dispatch('getNavbars')
+        this.$store.dispatch('getSettings')
+        this.$store.dispatch('getPages')
     },
 });

@@ -37,6 +37,11 @@ public class adminController {
         return "admin";
     }
 
+    @GetMapping({"/"})
+    public String index() {
+        return "index";
+    }
+
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping({"/admin/user"})
     @ResponseBody

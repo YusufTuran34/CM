@@ -1,49 +1,76 @@
 <template>
   <div>
     <div class="aside">
-      <section>
-        <label>Grid System</label>
-        <div @click="addElement([{ 'el': 'div',   'class' : 'row','subElement' : [] }])">Satır</div>
-        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-12','subElement' : [] }])">12</div>
-        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-6', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-6', 'subElement' : [] }])">6 : 6</div>
-        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-8', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-4', 'subElement' : [] }])">8 : 4</div>
-        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-4', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-8', 'subElement' : [] }])">4 : 8</div>
-        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-2', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-10', 'subElement' : [] }])">2 : 10</div>
-        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-10', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-2', 'subElement' : [] }])">10 : 2</div>
-        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-4', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-4', 'subElement' : [] },{ 'el': 'div','class' : 'col-sm-4', 'subElement' : [] }])">4 : 4 : 4</div>
-        <div @click="addElement([{ 'el': 'div',   'class' : 'col-sm-3', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-3', 'subElement' : [] },{ 'el': 'div','class' : 'col-sm-3', 'subElement' : [] },{ 'el': 'div','class' : 'col-sm-3', 'subElement' : [] }])">3 : 3 : 3 : 3</div>
-      </section>
-      <section>
-        <label>Html</label>
-        <div @click="addElement([{ 'el': 'label', 'text'  : 'Label' }])"> Label </div>
-        <div @click="addElement([{ 'el': 'p',     'text'  : 'paragraf' }])"> Paragraf </div>
-        <div @click="addElement([{ 'el': 'img',   'src'   : 'https://via.placeholder.com/150' }])"> Img </div>
-      </section>
-      <section>
-        <label>Component</label>
-        <div @click="addElement([{ 'el': 'legend','html'  : 'Custom' }])"> Summernote </div>
-        <div @click="addElement([{ 'el': 'bulten'}])"> Bulten </div>
-        <div @click="addElement([{ 'el': 'breadCrumb', 'urlList' : [{'url' : '/' , 'name' : 'Anasayfa'}]}])"> Bread Crumb </div>
-        <div @click="addElement([{ 'el': 'slider','slider': {'someList':[ { 'html': 'slide1', 'style': { 'background': '#1bbc9b' } } ] ,'options' : {'currentPage': 0} } }])"> Slider </div>
-        <div @click="addElement([{ 'el': 'recentpost','blogList' : [{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}},{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}},{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}}] }])"> Recent Post </div>
-      </section>
-
-      <div class="deleteEnable" @click="deleteModeTrigger"> Delete  </div>
-      <div class="updateEnable" @click="update"> Update  </div>
-
+      <div class="open-close-trigger" @click="editPageView = !editPageView">Aç Kapa</div>
+      <div v-if="editPageView && selectedItem == null && readyForAddElement == null">
+        <section>
+          <label>Grid System</label>
+          <div @click="addElement([{ 'el': 'div', 'class' : 'row','subElement' : [] }])">Satır</div>
+          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-12','subElement' : [] }])">12</div>
+          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-6', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-6', 'subElement' : [] }])">6 : 6</div>
+          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-8', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-4', 'subElement' : [] }])">8 : 4</div>
+          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-4', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-8', 'subElement' : [] }])">4 : 8</div>
+          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-2', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-10','subElement' : [] }])">2 : 10</div>
+          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-10','subElement' : [] },{'el': 'div', 'class' : 'col-sm-2', 'subElement' : [] }])">10 : 2</div>
+          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-4', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-4', 'subElement' : [] },{ 'el': 'div','class' : 'col-sm-4', 'subElement' : [] }])">4 : 4 : 4</div>
+          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-3', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-3', 'subElement' : [] },{ 'el': 'div','class' : 'col-sm-3', 'subElement' : [] },{ 'el': 'div','class' : 'col-sm-3', 'subElement' : [] }])">3 : 3 : 3 : 3</div>
+        </section>
+        <section>
+          <label>Html</label>
+          <div @click="addElement([{ 'el': 'label', 'text'  : 'Label' }])"> Label </div>
+          <div @click="addElement([{ 'el': 'p',     'text'  : 'paragraf' }])"> Paragraf </div>
+          <div @click="addElement([{ 'el': 'img',   'src'   : 'https://via.placeholder.com/150' }])"> Img </div>
+        </section>
+        <section>
+          <label>Component</label>
+          <div @click="addElement([{ 'el': 'legend','html'  : 'Custom' }])"> Summernote </div>
+          <div @click="addElement([{ 'el': 'bulten'}])"> Bulten </div>
+          <div @click="addElement([{ 'el': 'breadCrumb', 'urlList' : [{'url' : '/' , 'name' : 'Anasayfa'}]}])"> Bread Crumb </div>
+          <div @click="addElement([{ 'el': 'slider','slider': {'someList':[ { 'html': 'slide1', 'style': { 'background': '#1bbc9b' } } ] ,'options' : {'currentPage': 0} } }])"> Slider </div>
+          <div @click="addElement([{ 'el': 'recentpost','blogList' : [{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}},{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}},{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}}] }])"> Recent Post </div>
+          <div @click="addElement([{ 'el': 'blogList', 'pageUrl':'pageUrl', 'blogList' : [{'banner':{'url':'https://via.placeholder.com/150','title':'https://via.placeholder.com/150'},'url':'/','title':'title','date' : '24.01.2021','content' : { 'html_mini' : 'Lorem ipsum dolar sit amet'}},{'banner':{'url':'https://via.placeholder.com/150','title':'https://via.placeholder.com/150'},'url':'/','title':'title','date' : '24.01.2021','content' : { 'html_mini' : 'Lorem ipsum dolar sit amet'}}] }])"> Blog List </div>
+        </section>
+        <section>
+          <div class="deleteEnable" @click="deleteModeTrigger"> Delete  </div>
+          <div class="updateEnable" @click="update"> Update  </div>
+        </section>
+      </div>
     </div>
 
-    <div :class="[readyForAddElement != null ? 'preview-active' : 'preview']">
-      <html-object :elements="elements" @src-change="textChange" @remove-item="removeItem" @click-item="clickedItem" @text-change="textChange"></html-object>
+    <div class="page-main-view">
+      <div :class="[readyForAddElement != null ? 'preview-active' : 'preview']">
+        <header-component></header-component>
+        <div style="background: white;position: relative;float: left;min-height: 300px;width: 100%">
+          <html-object :elements="elements" @src-change="textChange" @css-change="cssChange" @remove-item="removeItem" @click-item="clickedItem" @text-change="textChange"></html-object>
+        </div>
+        <footer-component></footer-component>
+      </div>
     </div>
-    <div v-show="selectedItem != null && (selectedItem.el == 'label' || selectedItem.el == 'p')">
-      <div id="input-edit-popup" class="modal" tabindex="-1" role="dialog">
+
+    <div id="div-edit-css-popup" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+          </div>
+          <div class="modal-body">
+            <input v-model="css">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" @click="saveCSS">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="input-edit-popup" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
             </div>
             <div class="modal-body">
               <input v-model="text">
+              <input v-model="css">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-primary" @click="saveText">Save changes</button>
@@ -52,9 +79,23 @@
           </div>
         </div>
       </div>
-    </div>
-    <div v-show="selectedItem != null && (selectedItem.el == 'img')">
-      <div id="input-img-popup" class="modal" tabindex="-1" role="dialog">
+    <div id="input-img-popup" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+              <input v-model="text">
+              <input v-model="css">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" @click="saveImg">Save changes</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div id="input-bread-crumb-popup" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -69,26 +110,7 @@
           </div>
         </div>
       </div>
-    </div>
-    <div v-show="selectedItem != null && (selectedItem.el == 'breadCrumb')">
-      <div id="input-bread-crumb-popup" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-            </div>
-            <div class="modal-body">
-              <input v-model="text">
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" @click="saveImg">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-show="selectedItem != null && selectedItem.el == 'legend'">
-      <div id="legend-edit-popup" class="modal" tabindex="-1" role="dialog">
+    <div id="legend-edit-popup" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -103,7 +125,7 @@
           </div>
         </div>
       </div>
-    </div>
+
     <div v-show="selectedItem != null && selectedItem.el == 'bulten'">
 
     </div>
@@ -111,12 +133,14 @@
 </template>
 
 <script>
+console.log("17")
+import HeaderComponent from "./ui/headerComponent";
 import BultenComponent from "./general/bultenComponent";
-console.log("32");
-import HtmlObject from "./pageGame/htmlObject";
+import HtmlObject from "./general/htmlObject";
+import FooterComponent from "./ui/footerComponent";
 export default {
   name: "pagesComponent",
-  components: {BultenComponent, HtmlObject},
+  components: {FooterComponent, HeaderComponent, BultenComponent, HtmlObject},
   data:function (){
     return {
       elements : [
@@ -141,7 +165,9 @@ export default {
         }
       ],
       text : null,
+      css : null,
       selectedItem : null,
+      editPageView : false,
     }
   },
   methods:{
@@ -192,6 +218,7 @@ export default {
     removeItem(item){
       item = null;
     },
+
     textChange(item){
       if(item.el == 'legend'){
         $("#legend-edit-popup").modal('show')
@@ -204,14 +231,28 @@ export default {
       }
       this.selectedItem = item;
     },
+    cssChange(item){
+      if(item.el == 'div'){
+        $("#div-edit-css-popup").modal('show')
+      }
+      this.selectedItem = item;
+    },
 
+    saveCSS(){
+      this.selectedItem.css = this.css;
+      this.selectedItem = null;
+      this.css = null;
+    },
     saveText(){
       this.selectedItem.text = this.text;
+      this.selectedItem.css = this.css;
       this.selectedItem = null;
       this.text = null;
+      this.css = null;
     },
     saveImg(){
       this.selectedItem.src = this.text;
+      this.selectedItem.css = this.css;
       this.selectedItem = null;
       this.text = null;
     },
@@ -238,6 +279,13 @@ export default {
 </script>
 
 <style>
+  .aside{
+    position: absolute;
+    border: 1px solid black;
+    z-index: 9999;
+    background: #f4f4f4;
+
+  }
   .aside .deleteEnable{
     width: 46%;
     float: left;
@@ -307,6 +355,12 @@ export default {
     margin: 5%  !important;
   }
 
+  .preview .active-show-border{
+    height: auto;
+    float: left;
+    position: relative;
+    width: 100%;
+  }
 
   .preview-active .active-show-border{
     border: 2px solid red !important;
@@ -321,7 +375,4 @@ export default {
     float: left;
     position: relative;
   }
-
-
-
 </style>
