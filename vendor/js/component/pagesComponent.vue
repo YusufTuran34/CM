@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <div class="aside">
@@ -26,7 +27,7 @@
           <div @click="addElement([{ 'el': 'legend','html'  : 'Custom' }])"> Summernote </div>
           <div @click="addElement([{ 'el': 'bulten'}])"> Bulten </div>
           <div @click="addElement([{ 'el': 'breadCrumb', 'urlList' : [{'url' : '/' , 'name' : 'Anasayfa'}]}])"> Bread Crumb </div>
-          <div @click="addElement([{ 'el': 'slider','slider': {'imageList':['https://previews.123rf.com/images/eljanstock/eljanstock1811/eljanstock181109156/111624614-add-vector-icon-isolated-on-transparent-background-add-transparency-logo-concept.jpg']} }])"> Slider </div>
+          <div @click="addElement(models.Carousel)"> Slider </div>
           <div @click="addElement([{ 'el': 'recentpost','blogList' : [{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}},{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}},{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}}] }])"> Recent Post </div>
           <div @click="addElement([{ 'el': 'blogList', 'pageUrl':'pageUrl', 'blogList' : [{'banner':{'url':'https://via.placeholder.com/150','title':'https://via.placeholder.com/150'},'url':'/','title':'title','date' : '24.01.2021','content' : { 'html_mini' : 'Lorem ipsum dolar sit amet'}},{'banner':{'url':'https://via.placeholder.com/150','title':'https://via.placeholder.com/150'},'url':'/','title':'title','date' : '24.01.2021','content' : { 'html_mini' : 'Lorem ipsum dolar sit amet'}}] }])"> Blog List </div>
         </section>
@@ -152,11 +153,12 @@
 
 <script>
 import AddImage from "./tools/addImage";
-console.log("19")
 import HeaderComponent from "./ui/headerComponent";
 import BultenComponent from "./general/bultenComponent";
 import HtmlObject from "./general/htmlObject";
 import FooterComponent from "./ui/footerComponent";
+import Models from "../JsonInitModels/Models";
+console.log(Models.Carousel);
 export default {
   name: "pagesComponent",
   components: {AddImage, FooterComponent, HeaderComponent, BultenComponent, HtmlObject},
@@ -183,6 +185,7 @@ export default {
           ]
         }
       ],
+      models :Models,
 
       text : null,
       css : null,
@@ -190,7 +193,7 @@ export default {
       selectedItem : null,
       editPageView : false,
 
-      selectedImages:[]
+      selectedImages:[],
     }
   },
   methods:{
