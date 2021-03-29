@@ -18,7 +18,8 @@
                      @src-change="$emit('src-change', $event)"
                      @remove-item="$emit('remove-item', $event)"
                      @text-change="$emit('text-change', $event)"
-                     @slider-change ="$emit('slider-change',$event)"></html-object>
+                     @slider-change ="$emit('slider-change',$event)"
+                     @bread-crumb-change="$emit('bread-crumb-change',$event)"></html-object>
       </div>
       <img @dblclick="$emit('src-change', element)"
          v-if="element.el == 'img'" :src="element.src" :style="element.css">
@@ -33,7 +34,7 @@
       <blog-post-list-component v-if="element.el == 'blogList'" :blog-list="element.blogList" :page-url="element.pageUrl"></blog-post-list-component>
       <recent-post v-if="element.el == 'recentpost'" :recent-post-list="element.blogList"></recent-post>
       <bulten-component v-if="element.el == 'bulten'"></bulten-component>
-      <bread-crumb-component v-if="element.el == 'breadCrumb'" :bread-crumb-page-list="element.urlList"></bread-crumb-component>
+      <bread-crumb-component v-if="element.el == 'breadCrumb'" :bread-crumb-page-list="element.urlList" @bread-crumb-change="$emit('bread-crumb-change',$event)"></bread-crumb-component>
 
     </div>
     <span @click="$emit('click-item', {element : elements, order: 'last'})" v-if="readyForAddElement != null">

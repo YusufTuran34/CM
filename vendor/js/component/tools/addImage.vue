@@ -6,7 +6,6 @@
 </template>
 
 <script>
-console.log("hebeleCom");
 export default {
   name: "addImage",
   data: function () {

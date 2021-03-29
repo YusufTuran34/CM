@@ -32,8 +32,8 @@
           <div @click="addElement([{ 'el': 'blogList', 'pageUrl':'pageUrl', 'blogList' : [{'banner':{'url':'https://via.placeholder.com/150','title':'https://via.placeholder.com/150'},'url':'/','title':'title','date' : '24.01.2021','content' : { 'html_mini' : 'Lorem ipsum dolar sit amet'}},{'banner':{'url':'https://via.placeholder.com/150','title':'https://via.placeholder.com/150'},'url':'/','title':'title','date' : '24.01.2021','content' : { 'html_mini' : 'Lorem ipsum dolar sit amet'}}] }])"> Blog List </div>
         </section>
         <section>
-          <div class="deleteEnable" @click="deleteModeTrigger"> Delete  </div>
-          <div class="updateEnable" @click="update"> Update  </div>
+<!--          <div class="deleteEnable" @click="deleteModeTrigger"> Delete  </div>-->
+<!--          <div class="updateEnable" @click="update"> Update  </div>-->
         </section>
       </div>
     </div>
@@ -42,7 +42,15 @@
       <div :class="[readyForAddElement != null ? 'preview-active' : 'preview']">
         <header-component></header-component>
         <div style="background: white;position: relative;float: left;min-height: 300px;width: 100%">
-          <html-object :elements="elements" @slider-change="sliderChange" @src-change="textChange" @css-change="cssChange" @remove-item="removeItem" @click-item="clickedItem" @text-change="textChange"></html-object>
+          <html-object :elements="elements"
+                       @slider-change="elementChange"
+                       @src-change="elementChange"
+                       @css-change="elementChange"
+                       @text-change="elementChange"
+                       @bread-crumb-change="elementChange"
+
+                       @remove-item="removeItem"
+                       @click-item="clickedItem"></html-object>
         </div>
         <footer-component></footer-component>
       </div>
@@ -54,100 +62,26 @@
           <div class="modal-header">
           </div>
           <div class="modal-body">
-            <input v-model="css">
+<!--            <input v-model="css">-->
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="saveCSS">Save changes</button>
+<!--            <button type="button" class="btn btn-primary" @click="saveCSS">Save changes</button>-->
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="input-edit-popup" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-            </div>
-            <div class="modal-body">
-              <input v-model="text">
-              <input v-model="css">
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" @click="saveText">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    <div id="input-img-popup" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-            </div>
-            <div class="modal-body">
-              <input v-model="text">
-              <input v-model="css">
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" @click="saveImg">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    <div id="input-carousel-popup" class="modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-          </div>
-          <div class="modal-body">
-            <div v-for="image in selectedImages">
-              <img :src="image" alt="resim">
-            </div>
-            <add-image @file-change="selectedImagesChange"></add-image>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="input-bread-crumb-popup" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-            </div>
-            <div class="modal-body">
-              <input v-model="text">
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" @click="saveImg">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    <div id="legend-edit-popup" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-            </div>
-            <div class="modal-body">
-              <div id="summernote"></div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" @click="saveSummernote">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <input-edit-component       @click-item="inputEditChange"></input-edit-component>
 
-    <div v-show="selectedItem != null && selectedItem.el == 'bulten'">
+    <img-edit-component         @click-item="imgEditChange"></img-edit-component>
 
-    </div>
+    <carousel-edit-component    @click-item="carouselEditChange"   v-if="selectedItem != null && selectedItem.imageList != null" :selected-images="selectedItem.imageList"></carousel-edit-component>
+
+    <bread-crumb-edit-component @click-item="breadCrumbEditChange" v-if="selectedItem != null && selectedItem.imageList == null" :url-list="selectedItem"></bread-crumb-edit-component>
+
+    <legend-edit-component      @click-item="legendChange"></legend-edit-component>
+
   </div>
 </template>
 
@@ -158,10 +92,26 @@ import BultenComponent from "./general/bultenComponent";
 import HtmlObject from "./general/htmlObject";
 import FooterComponent from "./ui/footerComponent";
 import Models from "../JsonInitModels/Models";
-console.log(Models.Carousel);
+import InputEditComponent from "./edit/inputEditComponent";
+import ImgEditComponent from "./edit/imgEditComponent";
+import CarouselEditComponent from "./edit/carouselEditComponent";
+import LegendEditComponent from "./edit/legendEditComponent";
+import BreadCrumbEditComponent from "./edit/breadcrumbEditComponent";
+console.log("5");
 export default {
   name: "pagesComponent",
-  components: {AddImage, FooterComponent, HeaderComponent, BultenComponent, HtmlObject},
+  components: {
+    BreadCrumbEditComponent,
+    LegendEditComponent,
+    CarouselEditComponent,
+    ImgEditComponent,
+    InputEditComponent,
+    AddImage,
+    FooterComponent,
+    HeaderComponent,
+    BultenComponent,
+    HtmlObject
+  },
   data:function (){
     return {
       elements : [
@@ -187,30 +137,12 @@ export default {
       ],
       models :Models,
 
-      text : null,
-      css : null,
-
       selectedItem : null,
       editPageView : false,
-
-      selectedImages:[],
     }
   },
   methods:{
-    update(){},
-    deleteModeTrigger(){
-      if(!this.$store.state.readyToDelete){
-        setTimeout(function (){
-          //FOR CSS
-          setTimeout(function (){
-            $($(".preview span")[0]).hide();
-            $($(".preview span")[1]).hide();
-            $($(".preview span")[2]).hide();
-          },100)
-        },100)
-      }
-      this.$store.state.readyToDelete = !this.$store.state.readyToDelete;
-    },
+    //Select & Add element
     addElement(el){
       this.$store.dispatch("setReadyCreateElement",el)
       //FOR CSS
@@ -241,61 +173,73 @@ export default {
       this.$store.state.element = null;
 
     },
+
+    // deleteModeTrigger(){
+    //   if(!this.$store.state.readyToDelete){
+    //     setTimeout(function (){
+    //       //FOR CSS
+    //       setTimeout(function (){
+    //         $($(".preview span")[0]).hide();
+    //         $($(".preview span")[1]).hide();
+    //         $($(".preview span")[2]).hide();
+    //       },100)
+    //     },100)
+    //   }
+    //   this.$store.state.readyToDelete = !this.$store.state.readyToDelete;
+    // },
     removeItem(item){
       item = null;
     },
 
-    textChange(item){
+    elementChange(item){
       if(item.el == 'legend'){
         $("#legend-edit-popup").modal('show')
       }else if(item.el == 'p' || item.el == 'label'){
         $("#input-edit-popup").modal('show')
       }else if(item.el == 'img'){
         $("#input-img-popup").modal('show')
-      }else if(item.el == 'breadCrumb'){
+      }else if(item.length>0){
+      // }else if(item.el == 'breadCrumb'){
         $("#input-bread-crumb-popup").modal('show')
-      }
-      this.selectedItem = item;
-    },
-    cssChange(item){
-      if(item.el == 'div'){
+      // }else if(item.imageList != 'slider'){
+      }else if(item.imageList != null){
+        $("#input-carousel-popup").modal('show');
+      }else if(item.el == 'div'){
         $("#div-edit-css-popup").modal('show')
       }
       this.selectedItem = item;
     },
 
-    saveCSS(){
-      this.selectedItem.css = this.css;
+    //EDIT
+    inputEditChange(text,css){
+      this.selectedItem.text = text;
+      this.selectedItem.css = css;
+      $("#input-edit-popup").modal('show')
       this.selectedItem = null;
-      this.css = null;
     },
-    saveText(){
-      this.selectedItem.text = this.text;
-      this.selectedItem.css = this.css;
+    imgEditChange(url,css){
+      this.selectedItem.src = url;
+      this.selectedItem.css = css;
+      $("#input-img-popup").modal('hide')
       this.selectedItem = null;
-      this.text = null;
-      this.css = null;
     },
-    saveImg(){
-      this.selectedItem.src = this.text;
-      this.selectedItem.css = this.css;
+    legendChange(code){
+      this.selectedItem.html = code;
+      $("#legend-edit-popup").modal('hide')
       this.selectedItem = null;
-      this.text = null;
     },
-    saveSummernote(){
-      this.selectedItem.html = $("#summernote").summernote('code');
-      $("#summernote").summernote('code',null);
-      $(".modal").modal('close');
+    carouselEditChange(images,html){
+      this.selectedItem.imageList = images;
+      this.selectedItem.html = html;
+      $("#input-carousel-popup").modal('hide');
       this.selectedItem = null;
-      this.text = null;
     },
-    sliderChange(params){
-      $("#input-carousel-popup").modal('show');
-      this.selectedImages = params.imageList;
+    breadCrumbEditChange(urlList){
+      this.selectedItem = urlList;
+      $("#input-bread-crumb-popup").modal('hide')
+      this.selectedItem = null;
     },
-    selectedImagesChange(fileParam){
-      this.selectedImages.push(fileParam);
-    }
+    
   },
   computed: {
     readyForAddElement(){

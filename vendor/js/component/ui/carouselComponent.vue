@@ -10,8 +10,8 @@
               <div class="carousel-item active">
                 <img  alt="#" :src="slider.imageList[0]"/>
               </div>
-              <div class="carousel-item" v-for="(sld,index) in slider.imageList">
-                <img  v-if="index > 0" alt="#" :src="sld"/>
+              <div class="carousel-item" v-for="(sld,index) in slider.imageList" v-if="index > 0">
+                <img alt="#" :src="sld"/>
               </div>
 
             </div>
@@ -26,14 +26,8 @@
           </div>
         </div>
         <div class="col-md-5">
-          <div class="full slider_cont_section">
-            <h4>More Featured in</h4>
-            <h3>Jack Blogger</h3>
-            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look</p>
-            <div class="button_section">
-              <a href="about.html">Read More</a>
-              <a href="contact.html">Contact Us</a>
-            </div>
+          <div class="full slider_cont_section" v-html="slider.html">
+
           </div>
         </div>
       </div>
