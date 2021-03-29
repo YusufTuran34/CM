@@ -1,6 +1,6 @@
 <template>
   <div style="height: 700px">
-    <div class="banner-slider">
+    <div class="banner-slider" @dblclick="$emit('slider-change',slider)">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-7">
@@ -8,13 +8,12 @@
             <!-- The slideshow -->
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src="images/slider_1.png" alt="#" :src="selectedImage == null ? '/src/assets/default.png' : selectedImage"/>
-                <input ref="file" type="file" style="display: none;" @change="onChange($event)" class="form-control">
-                <button class="btn btn-outline-secondary " type="button" @click="$refs.file.click()">Resim Seç</button>
+                <img  alt="#" :src="slider.imageList[0]"/>
               </div>
-              <div class="carousel-item">
-                <img src="images/slider_1.png" alt="#" />
+              <div class="carousel-item" v-for="(sld,index) in slider.imageList">
+                <img  v-if="index > 0" alt="#" :src="sld"/>
               </div>
+
             </div>
             <!-- Left and right controls -->
             <a class="carousel-control-prev" href="#slider_main" data-slide="prev">
@@ -23,6 +22,7 @@
             <a class="carousel-control-next" href="#slider_main" data-slide="next">
               <i class="fa fa-angle-right" aria-hidden="true"></i>
             </a>
+
           </div>
         </div>
         <div class="col-md-5">
@@ -43,17 +43,27 @@
 </template>
 
 <script>
+import AddImage from "../tools/addImage";
 export default {
   name: "carouselComponent",
-  data: function () {
+  components: {AddImage},
+  props:{
+    preview:false,
+    slider:null,
+  },
+  data:function (){
     return {
-      selectedImage: null
+      selectedImage: null,
+      components :[AddImage]
     }
   },
-  methods: {
-    onChange(e) {
+  methods:{
+    onChangeFirst(e) {
       const file = e.target.files[0];
       this.selectedImage = URL.createObjectURL(file);
+    },
+    add(){
+      this.components.push(AddImage);
     }
   }
 }

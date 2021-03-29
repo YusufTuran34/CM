@@ -17,7 +17,8 @@
                      @css-change="$emit('css-change', $event)"
                      @src-change="$emit('src-change', $event)"
                      @remove-item="$emit('remove-item', $event)"
-                     @text-change="$emit('text-change', $event)"></html-object>
+                     @text-change="$emit('text-change', $event)"
+                     @slider-change ="$emit('slider-change',$event)"></html-object>
       </div>
       <img @dblclick="$emit('src-change', element)"
          v-if="element.el == 'img'" :src="element.src" :style="element.css">
@@ -28,7 +29,7 @@
       <legend @dblclick="$emit('text-change', element)" :style="element.css"
               v-if="element.el == 'legend' && element.html != null" v-html="element.html"></legend>
 
-      <carousel-component v-if="element.el == 'slider'" :slider="element.slider"></carousel-component>
+      <carousel-component v-if="element.el == 'slider'" :slider="element.slider" :preview="false" @slider-change ="$emit('slider-change',$event)"></carousel-component>
       <blog-post-list-component v-if="element.el == 'blogList'" :blog-list="element.blogList" :page-url="element.pageUrl"></blog-post-list-component>
       <recent-post v-if="element.el == 'recentpost'" :recent-post-list="element.blogList"></recent-post>
       <bulten-component v-if="element.el == 'bulten'"></bulten-component>

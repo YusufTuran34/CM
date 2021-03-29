@@ -26,7 +26,7 @@
           <div @click="addElement([{ 'el': 'legend','html'  : 'Custom' }])"> Summernote </div>
           <div @click="addElement([{ 'el': 'bulten'}])"> Bulten </div>
           <div @click="addElement([{ 'el': 'breadCrumb', 'urlList' : [{'url' : '/' , 'name' : 'Anasayfa'}]}])"> Bread Crumb </div>
-          <div @click="addElement([{ 'el': 'slider','slider': {'someList':[ { 'html': 'slide1', 'style': { 'background': '#1bbc9b' } } ] ,'options' : {'currentPage': 0} } }])"> Slider </div>
+          <div @click="addElement([{ 'el': 'slider','slider': {'imageList':['https://previews.123rf.com/images/eljanstock/eljanstock1811/eljanstock181109156/111624614-add-vector-icon-isolated-on-transparent-background-add-transparency-logo-concept.jpg']} }])"> Slider </div>
           <div @click="addElement([{ 'el': 'recentpost','blogList' : [{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}},{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}},{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}}] }])"> Recent Post </div>
           <div @click="addElement([{ 'el': 'blogList', 'pageUrl':'pageUrl', 'blogList' : [{'banner':{'url':'https://via.placeholder.com/150','title':'https://via.placeholder.com/150'},'url':'/','title':'title','date' : '24.01.2021','content' : { 'html_mini' : 'Lorem ipsum dolar sit amet'}},{'banner':{'url':'https://via.placeholder.com/150','title':'https://via.placeholder.com/150'},'url':'/','title':'title','date' : '24.01.2021','content' : { 'html_mini' : 'Lorem ipsum dolar sit amet'}}] }])"> Blog List </div>
         </section>
@@ -41,7 +41,7 @@
       <div :class="[readyForAddElement != null ? 'preview-active' : 'preview']">
         <header-component></header-component>
         <div style="background: white;position: relative;float: left;min-height: 300px;width: 100%">
-          <html-object :elements="elements" @src-change="textChange" @css-change="cssChange" @remove-item="removeItem" @click-item="clickedItem" @text-change="textChange"></html-object>
+          <html-object :elements="elements" @slider-change="sliderChange" @src-change="textChange" @css-change="cssChange" @remove-item="removeItem" @click-item="clickedItem" @text-change="textChange"></html-object>
         </div>
         <footer-component></footer-component>
       </div>
@@ -101,10 +101,13 @@
           <div class="modal-header">
           </div>
           <div class="modal-body">
-            <input placeholder="img ekleme TODO">
+            <div v-for="image in selectedImages">
+              <img :src="image" alt="resim">
+            </div>
+            <add-image @file-change="selectedImagesChange"></add-image>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="saveImg">Save changes</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
@@ -148,14 +151,15 @@
 </template>
 
 <script>
-console.log("17")
+import AddImage from "./tools/addImage";
+console.log("19")
 import HeaderComponent from "./ui/headerComponent";
 import BultenComponent from "./general/bultenComponent";
 import HtmlObject from "./general/htmlObject";
 import FooterComponent from "./ui/footerComponent";
 export default {
   name: "pagesComponent",
-  components: {FooterComponent, HeaderComponent, BultenComponent, HtmlObject},
+  components: {AddImage, FooterComponent, HeaderComponent, BultenComponent, HtmlObject},
   data:function (){
     return {
       elements : [
@@ -185,6 +189,8 @@ export default {
 
       selectedItem : null,
       editPageView : false,
+
+      selectedImages:[]
     }
   },
   methods:{
@@ -279,6 +285,13 @@ export default {
       $(".modal").modal('close');
       this.selectedItem = null;
       this.text = null;
+    },
+    sliderChange(params){
+      $("#input-carousel-popup").modal('show');
+      this.selectedImages = params.imageList;
+    },
+    selectedImagesChange(fileParam){
+      this.selectedImages.push(fileParam);
     }
   },
   computed: {
