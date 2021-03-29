@@ -22,7 +22,7 @@
           <div @click="addElement([{ 'el': 'img',   'src'   : 'https://via.placeholder.com/150' }])"> Img </div>
         </section>
         <section>
-          <label>Component</label>
+          <label>Components</label>
           <div @click="addElement([{ 'el': 'legend','html'  : 'Custom' }])"> Summernote </div>
           <div @click="addElement([{ 'el': 'bulten'}])"> Bulten </div>
           <div @click="addElement([{ 'el': 'breadCrumb', 'urlList' : [{'url' : '/' , 'name' : 'Anasayfa'}]}])"> Bread Crumb </div>
@@ -95,6 +95,21 @@
           </div>
         </div>
       </div>
+    <div id="input-carousel-popup" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+          </div>
+          <div class="modal-body">
+            <input placeholder="img ekleme TODO">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" @click="saveImg">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="input-bread-crumb-popup" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -164,8 +179,10 @@ export default {
           ]
         }
       ],
+
       text : null,
       css : null,
+
       selectedItem : null,
       editPageView : false,
     }

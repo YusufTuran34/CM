@@ -33,6 +33,7 @@
       <recent-post v-if="element.el == 'recentpost'" :recent-post-list="element.blogList"></recent-post>
       <bulten-component v-if="element.el == 'bulten'"></bulten-component>
       <bread-crumb-component v-if="element.el == 'breadCrumb'" :bread-crumb-page-list="element.urlList"></bread-crumb-component>
+
     </div>
     <span @click="$emit('click-item', {element : elements, order: 'last'})" v-if="readyForAddElement != null">
       Ekle
