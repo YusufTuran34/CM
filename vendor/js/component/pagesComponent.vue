@@ -6,30 +6,30 @@
       <div v-if="editPageView && selectedItem == null && readyForAddElement == null">
         <section>
           <label>Grid System</label>
-          <div @click="addElement([{ 'el': 'div', 'class' : 'row','subElement' : [] }])">Satır</div>
-          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-12','subElement' : [] }])">12</div>
-          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-6', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-6', 'subElement' : [] }])">6 : 6</div>
-          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-8', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-4', 'subElement' : [] }])">8 : 4</div>
-          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-4', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-8', 'subElement' : [] }])">4 : 8</div>
-          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-2', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-10','subElement' : [] }])">2 : 10</div>
-          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-10','subElement' : [] },{'el': 'div', 'class' : 'col-sm-2', 'subElement' : [] }])">10 : 2</div>
-          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-4', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-4', 'subElement' : [] },{ 'el': 'div','class' : 'col-sm-4', 'subElement' : [] }])">4 : 4 : 4</div>
-          <div @click="addElement([{ 'el': 'div', 'class' : 'col-sm-3', 'subElement' : [] },{'el': 'div', 'class' : 'col-sm-3', 'subElement' : [] },{ 'el': 'div','class' : 'col-sm-3', 'subElement' : [] },{ 'el': 'div','class' : 'col-sm-3', 'subElement' : [] }])">3 : 3 : 3 : 3</div>
+          <div @click="addElement(models.row)">Satır</div>
+          <div @click="addElement(models.col12)">12</div>
+          <div @click="addElement(models.col66)">6 : 6</div>
+          <div @click="addElement(models.col84)">8 : 4</div>
+          <div @click="addElement(models.col48)">4 : 8</div>
+          <div @click="addElement(models.col210)">2 : 10</div>
+          <div @click="addElement(models.col102)">10 : 2</div>
+          <div @click="addElement(models.col444)">4 : 4 : 4</div>
+          <div @click="addElement(models.col3333)">3 : 3 : 3 : 3</div>
         </section>
         <section>
           <label>Html</label>
-          <div @click="addElement([{ 'el': 'label', 'text'  : 'Label' }])"> Label </div>
-          <div @click="addElement([{ 'el': 'p',     'text'  : 'paragraf' }])"> Paragraf </div>
-          <div @click="addElement([{ 'el': 'img',   'src'   : 'https://via.placeholder.com/150' }])"> Img </div>
+          <div @click="addElement(models.label)"> Label </div>
+          <div @click="addElement(models.paragraf)"> Paragraf </div>
+          <div @click="addElement(models.img)"> Img </div>
         </section>
         <section>
           <label>Components</label>
-          <div @click="addElement([{ 'el': 'legend','html'  : 'Custom' }])"> Summernote </div>
-          <div @click="addElement([{ 'el': 'bulten'}])"> Bulten </div>
-          <div @click="addElement([{ 'el': 'breadCrumb', 'urlList' : [{'url' : '/' , 'name' : 'Anasayfa'}]}])"> Bread Crumb </div>
+          <div @click="addElement(models.summernote)"> Summernote </div>
+          <div @click="addElement(models.bulten)"> Bulten </div>
+          <div @click="addElement(models.breadCrumb)"> Bread Crumb </div>
           <div @click="addElement(models.Carousel)"> Slider </div>
-          <div @click="addElement([{ 'el': 'recentpost','blogList' : [{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}},{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}},{'title':'title','date' : '24.01.2021','content' : { 'html_desktop' : 'Lorem ipsum dolar sit amet'}}] }])"> Recent Post </div>
-          <div @click="addElement([{ 'el': 'blogList', 'pageUrl':'pageUrl', 'blogList' : [{'banner':{'url':'https://via.placeholder.com/150','title':'https://via.placeholder.com/150'},'url':'/','title':'title','date' : '24.01.2021','content' : { 'html_mini' : 'Lorem ipsum dolar sit amet'}},{'banner':{'url':'https://via.placeholder.com/150','title':'https://via.placeholder.com/150'},'url':'/','title':'title','date' : '24.01.2021','content' : { 'html_mini' : 'Lorem ipsum dolar sit amet'}}] }])"> Blog List </div>
+          <div @click="addElement(models.recentPost)"> Recent Post </div>
+          <div @click="addElement(models.blogList)"> Blog List </div>
         </section>
         <section>
 <!--          <div class="deleteEnable" @click="deleteModeTrigger"> Delete  </div>-->
@@ -97,7 +97,7 @@ import ImgEditComponent from "./edit/imgEditComponent";
 import CarouselEditComponent from "./edit/carouselEditComponent";
 import LegendEditComponent from "./edit/legendEditComponent";
 import BreadCrumbEditComponent from "./edit/breadcrumbEditComponent";
-console.log("5");
+
 export default {
   name: "pagesComponent",
   components: {
