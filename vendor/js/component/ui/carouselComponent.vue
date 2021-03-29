@@ -8,7 +8,9 @@
             <!-- The slideshow -->
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src="images/slider_1.png" alt="#" />
+                <img src="images/slider_1.png" alt="#" :src="selectedImage == null ? '/src/assets/default.png' : selectedImage"/>
+                <input ref="file" type="file" style="display: none;" @change="onChange($event)" class="form-control">
+                <button class="btn btn-outline-secondary " type="button" @click="$refs.file.click()">Resim Seç</button>
               </div>
               <div class="carousel-item">
                 <img src="images/slider_1.png" alt="#" />
@@ -42,7 +44,18 @@
 
 <script>
 export default {
-  name: "carouselComponent"
+  name: "carouselComponent",
+  data: function () {
+    return {
+      selectedImage: null
+    }
+  },
+  methods: {
+    onChange(e) {
+      const file = e.target.files[0];
+      this.selectedImage = URL.createObjectURL(file);
+    }
+  }
 }
 </script>
 
