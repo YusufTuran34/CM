@@ -5,7 +5,7 @@
         <div class="col-lg-3 logo_section">
           <div class="full">
             <div class="center-desk" v-if="settings != null">
-              <div class="logo"> <a href="/"><img :src="settings.logo.url" :alt="settings.logo.title"></a> </div>
+              <div class="logo"> <a href="/"><img class="logo-img" :src="settings.logo.url" :alt="settings.logo.title"></a> </div>
             </div>
           </div>
         </div>

@@ -19,6 +19,11 @@
 <script>
 export default {
   name: "legendEditComponent",
+  model: {
+    prop: 'selectedItem',
+    event: 'change'
+  },
+  props:['selectedItem'],
   methods:{
     saveSummernote(){
       this.$emit('clicked-item',$("#summernote").summernote('code'))
@@ -26,6 +31,7 @@ export default {
   },
   mounted() {
     $("#summernote").summernote()
+    $("#summernote").summernote('code',this.selectedItem.html);
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div style="height: 700px">
-    <div class="banner-slider" @dblclick="$emit('slider-change',slider)">
+    <div class="banner-slider">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-7">
@@ -17,10 +17,10 @@
             </div>
             <!-- Left and right controls -->
             <a class="carousel-control-prev" href="#slider_main" data-slide="prev">
-              <i class="fa fa-angle-left" aria-hidden="true"></i>
+              <i class="fa fa-angle-left"  aria-hidden="true" style="color: black"> < </i>
             </a>
             <a class="carousel-control-next" href="#slider_main" data-slide="next">
-              <i class="fa fa-angle-right" aria-hidden="true"></i>
+              <i class="fa fa-angle-right" aria-hidden="true" style="color: black"> > </i>
             </a>
 
           </div>

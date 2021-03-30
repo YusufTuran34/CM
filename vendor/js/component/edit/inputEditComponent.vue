@@ -8,16 +8,16 @@
           <div class="row">
             <div class="col-sm-6">
               <label>Text</label>
-              <input v-model="text">
+              <input v-model="selectedItem.text">
             </div>
             <div class="col-sm-6">
               <label>CSS</label>
-              <input v-model="css">
+              <input v-model="selectedItem.css">
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" @click="($emit('click-item',text,css))">Kaydet</button>
+          <button type="button" class="btn btn-primary" @click="($emit('click-item',selectedItem.text,selectedItem.css))">Kaydet</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
         </div>
       </div>
@@ -28,12 +28,11 @@
 <script>
 export default {
   name: "inputEditComponent",
-  data:function (){
-    return {
-      text : null,
-      css:null,
-    }
-  }
+  model: {
+    prop: 'selectedItem',
+    event: 'change'
+  },
+  props:['selectedItem']
 }
 </script>
 

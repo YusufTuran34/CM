@@ -8,6 +8,7 @@
     </span>
     <div v-for="element in elements">
       <div v-if="element.el == 'div'" :style="element.css" :class="element.class">
+        <code v-if="readyForAddElement != null">{{element.class}}</code>
         <div @click="$emit('css-change', element)" v-if="readyForAddElement == null && readyToCss == true">
           Edit CSS
         </div>
@@ -30,11 +31,11 @@
       <legend @dblclick="$emit('text-change', element)" :style="element.css"
               v-if="element.el == 'legend' && element.html != null" v-html="element.html"></legend>
 
-      <carousel-component v-if="element.el == 'slider'" :slider="element.slider" :preview="false" @slider-change ="$emit('slider-change',$event)"></carousel-component>
+      <carousel-component v-if="element.el == 'slider'" :slider="element.slider" :preview="false" v-on:click.native="$emit('slider-change',element)"></carousel-component>
       <blog-post-list-component v-if="element.el == 'blogList'" :blog-list="element.blogList" :page-url="element.pageUrl"></blog-post-list-component>
       <recent-post v-if="element.el == 'recentpost'" :recent-post-list="element.blogList"></recent-post>
       <bulten-component v-if="element.el == 'bulten'"></bulten-component>
-      <bread-crumb-component v-if="element.el == 'breadCrumb'" :bread-crumb-page-list="element.urlList" @bread-crumb-change="$emit('bread-crumb-change',$event)"></bread-crumb-component>
+      <bread-crumb-component v-if="element.el == 'breadCrumb'" :bread-crumb-page-list="element.urlList" v-on:click.native="$emit('bread-crumb-change',element)"></bread-crumb-component>
 
     </div>
     <span @click="$emit('click-item', {element : elements, order: 'last'})" v-if="readyForAddElement != null">
@@ -43,9 +44,7 @@
   </div>
 </template>
 <script>
-import recentPost from "./recentPost";
-import sliderComponent from "./sliderComponent";
-import { slider, slideritem } from 'vue-concise-slider';
+import RecentPost from "./recentPost";
 import BultenComponent from "./bultenComponent";
 import BreadCrumbComponent from "./breadCrumbComponent";
 import CarouselComponent from "../ui/carouselComponent";
@@ -53,8 +52,8 @@ import BlogPostListComponent from "../ui/blog/blogPostListComponent";
 export default {
   name: "htmlObject",
   components : {
-    BlogPostListComponent,
-    CarouselComponent, BreadCrumbComponent, BultenComponent, sliderComponent,slider,slideritem,recentPost},
+    BlogPostListComponent, CarouselComponent,
+    BreadCrumbComponent, BultenComponent, RecentPost},
   data:function (){
     return {
 
@@ -81,5 +80,17 @@ export default {
 </script>
 
 <style scoped>
-
+  code{
+    font-family: monospace, monospace;
+    font-size: 1em;
+    margin-top: -18px;
+    margin-left: 1px;
+    float: left;
+    position: relative;
+    border: 2px solid;
+    padding: 1px;
+    line-height: 13px;
+    border-radius: 2px;
+    border-bottom: 1px solid white
+  }
 </style>

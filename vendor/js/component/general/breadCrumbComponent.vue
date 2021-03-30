@@ -1,5 +1,5 @@
 <template>
-  <div @dblclick="$emit('bread-crumb-change',breadCrumbPageList)">
+  <div>
     <ul class="breadcrumb">
       <li v-for="page in breadCrumbPageList"><a :href="page.url">{{ page.name }}</a></li>
     </ul>

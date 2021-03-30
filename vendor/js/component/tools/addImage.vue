@@ -1,7 +1,7 @@
 <template>
   <div>
-    <input ref="file" type="file" style="display: none;" @change="onChange($event)" class="form-control">
-    <button  class="btn btn-outline-secondary " type="button" @click="$refs.file.click()">{{ btnName }}</button>
+    <input ref="file" type="file" style="display: none;" @change="onChange($event)">
+    <button class="btn btn-outline-secondary " type="button" @click="$refs.file.click()">{{ btnName }}</button>
   </div>
 </template>
 

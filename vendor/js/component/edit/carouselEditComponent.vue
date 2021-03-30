@@ -6,14 +6,14 @@
         </div>
         <div class="modal-body">
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6" style="max-height: 500px;overflow: auto">
               <div v-for="(image,index) in selectedImagesObj">
-                <img style="height: 100px;width: 100px" :src="image" alt="resim">
-                <button @click="deleteFile(index)">Sil</button>
+                <img style="height: 100px;width: 200px;padding: 10px;border: 1px solid;" :src="image" alt="resim">
+                <button class="btn btn-outline-danger" @click="deleteFile(index)">x</button>
                 <add-image :btn-name="'Güncelle'" @file-change="selectedImagesChange($event,index)"></add-image>
               </div>
-              <label>Yeni Ekleme</label>
-              <add-image :btn-name="'Ekle'" @file-change="fileAdd"></add-image>
+              <br>
+              <add-image :btn-name="'Yeni Ekle'" @file-change="fileAdd"></add-image>
             </div>
             <div class="col-sm-6">
               <div id="summernoteCarousel"></div>
@@ -33,7 +33,7 @@
 import AddImage from "../tools/addImage";
 export default {
   name: "carouselEditComponent",
-  props:['selectedImages'],
+  props:['selectedImages','html'],
   components: {AddImage},
   methods:{
     deleteFile(index){
@@ -56,7 +56,10 @@ export default {
     },
   },
   mounted() {
-    $("#summernoteCarousel").summernote();
+    $("#summernoteCarousel").summernote({
+      height: 400
+    });
+    $("#summernoteCarousel").summernote('code',this.html);
   }
 }
 </script>

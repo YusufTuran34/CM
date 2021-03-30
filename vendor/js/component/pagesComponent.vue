@@ -2,6 +2,7 @@
   <div>
     <div class="aside">
       <div class="open-close-trigger" @click="editPageView = !editPageView">Menü</div>
+      <div class="cancel-ready-element" v-if="readyForAddElement != null" @click="dropReadyForAddElement">Seçimi iptal et </div>
       <div v-if="editPageView && selectedItem == null && readyForAddElement == null">
         <section>
           <label>Grid System</label>
@@ -71,15 +72,11 @@
       </div>
     </div>
 
-    <input-edit-component       @click-item="inputEditChange"></input-edit-component>
-
-    <img-edit-component         @click-item="imgEditChange"></img-edit-component>
-
-    <carousel-edit-component    @click-item="carouselEditChange"   v-if="selectedItem != null && selectedItem.imageList != null" :selected-images="selectedItem.imageList"></carousel-edit-component>
-
-    <bread-crumb-edit-component @click-item="breadCrumbEditChange" v-if="selectedItem != null && selectedItem.imageList == null" :url-list="selectedItem"></bread-crumb-edit-component>
-
-    <legend-edit-component      @click-item="legendChange"></legend-edit-component>
+    <input-edit-component       @click-item="inputEditChange"      v-if="selectedItem != null && selectedItem.text != null"       :selected-item="selectedItem"></input-edit-component>
+    <img-edit-component         @click-item="imgEditChange"        v-if="selectedItem != null && selectedItem.src != null"        :selected-item="selectedItem"></img-edit-component>
+    <legend-edit-component      @click-item="legendChange"         v-if="selectedItem != null && selectedItem.el == 'summernote'" :selected-item="selectedItem"></legend-edit-component>
+    <carousel-edit-component    @click-item="carouselEditChange"   v-if="selectedItem != null && selectedItem.el == 'slider'"     :selected-images="selectedItem.slider.imageList" :html="selectedItem.html"></carousel-edit-component>
+    <bread-crumb-edit-component @click-item="breadCrumbEditChange" v-if="selectedItem != null && selectedItem.el == 'breadCrumb'" :url-list="selectedItem.urlList"></bread-crumb-edit-component>
 
   </div>
 </template>
@@ -119,18 +116,7 @@ export default {
           "class"       : "container",
           "css"         : "",
           "subElement"  : [
-            {
-              "el"      : "div",
-              "class"   : "row",
-              "subElement" : [
-                {
-                  "el"          : "div",
-                  "class"       : "col-sm-12",
-                  "css"         : "",
-                  "subElement"  : []
-                }
-              ]
-            },
+
           ]
         }
       ],
@@ -147,13 +133,14 @@ export default {
       //FOR CSS
       setTimeout(function (){
         $($(".preview-active span")[0]).hide();
-        $($(".preview-active span")[1]).hide();
-        $($(".preview-active span")[2]).hide();
+        // $($(".preview-active span")[1]).hide();
 
         $($(".preview-active span")[$(".preview-active span").length-1]).hide();
-        $($(".preview-active span")[$(".preview-active span").length-2]).hide();
-        $($(".preview-active span")[$(".preview-active span").length-3]).hide();
+        // $($(".preview-active span")[$(".preview-active span").length-2]).hide();
       },100);
+    },
+    dropReadyForAddElement(){
+      this.$store.dispatch("setReadyCreateElement",null)
     },
     clickedItem(item){
       let elements = item.element
@@ -191,29 +178,28 @@ export default {
     },
 
     elementChange(item){
+      this.selectedItem = item;
       if(item.el == 'legend'){
         $("#legend-edit-popup").modal('show')
       }else if(item.el == 'p' || item.el == 'label'){
         $("#input-edit-popup").modal('show')
       }else if(item.el == 'img'){
         $("#input-img-popup").modal('show')
-      }else if(item.length>0){
-      // }else if(item.el == 'breadCrumb'){
+      }else if(item.el == 'breadCrumb'){
         $("#input-bread-crumb-popup").modal('show')
-      // }else if(item.imageList != 'slider'){
-      }else if(item.imageList != null){
+      }else if(item.el == 'slider'){
         $("#input-carousel-popup").modal('show');
       }else if(item.el == 'div'){
         $("#div-edit-css-popup").modal('show')
       }
-      this.selectedItem = item;
+
     },
 
     //EDIT
     inputEditChange(text,css){
       this.selectedItem.text = text;
       this.selectedItem.css = css;
-      $("#input-edit-popup").modal('show')
+      $("#input-edit-popup").modal('hide')
       this.selectedItem = null;
     },
     imgEditChange(url,css){
@@ -228,13 +214,13 @@ export default {
       this.selectedItem = null;
     },
     carouselEditChange(images,html){
-      this.selectedItem.imageList = images;
-      this.selectedItem.html = html;
+      this.selectedItem.slider.imageList = images;
+      this.selectedItem.slider.html = html;
       $("#input-carousel-popup").modal('hide');
       this.selectedItem = null;
     },
     breadCrumbEditChange(urlList){
-      this.selectedItem = urlList;
+      this.selectedItem.urlList = urlList;
       $("#input-bread-crumb-popup").modal('hide')
       this.selectedItem = null;
     },
@@ -266,6 +252,10 @@ export default {
     margin-top: 5px;
     border: 4px solid red;
     text-align: center;
+  }
+  .cancel-ready-element{
+    color: red;
+    font-size: 12px;
   }
   .aside .updateEnable{
     width: 46%;
@@ -310,21 +300,19 @@ export default {
   }
   .preview-active .container{
     border: 1px solid #212529;
-    min-height: 50px;
+    min-height: 10px;
     position: relative !important;
     float: left !important;
-    width: 90%  !important;
-    margin: 5%  !important;
-    margin: 5%  !important;
+    width: 97%  !important;
+    margin: 3%  !important;
   }
   .preview-active .row{
     border: 1px solid #212529;
-    min-height: 50px;
+    min-height: 10px;
     position: relative !important;
     float: left !important;
-    width: 90%  !important;
-    margin: 5%  !important;
-    margin: 5%  !important;
+    width: 97%  !important;
+    margin: 3%  !important;
   }
 
   .preview .active-show-border{

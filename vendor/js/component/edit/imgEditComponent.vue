@@ -5,11 +5,18 @@
         <div class="modal-header">
         </div>
         <div class="modal-body">
-          <add-image @file-change="selectedImagesChange"></add-image>
-          <input v-model="css">
+          <div class="row">
+            <div class="col-sm-6">
+              <img :src="selectedItem.src">
+              <add-image @file-change="selectedImagesChange" :btn-name="'Yükle'"></add-image>
+            </div>
+            <div class="col-sm-6">
+              <css-editor v-model="selectedItem.css"></css-editor>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" @click="($emit('click-item',url,css))">Kaydet</button>
+          <button type="button" class="btn btn-primary" @click="($emit('click-item',url,selectedItem.css))">Kaydet</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
         </div>
       </div>
@@ -19,20 +26,25 @@
 
 <script>
 import AddImage from "../tools/addImage";
+import CssEditor from "../tools/cssEditor";
 export default {
   name: "imgEditComponent",
-  components: {AddImage},
+  components: {CssEditor, AddImage},
+  model: {
+    prop: 'selectedItem',
+    event: 'change'
+  },
+  props:['selectedItem'],
   data:function (){
     return {
-      url : null,
-      css:null,
+      url: null,
     }
   },
   methods:{
     selectedImagesChange(url){
       this.url = url;
     }
-  }
+  },
 }
 </script>
 

@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="${basePath}/vendor/css/bootstrap.min.css">
     <link rel="stylesheet" href="${basePath}/vendor/css/style.css">
     <link rel="stylesheet" href="${basePath}/vendor/css/responsive.css">
-    <link rel="icon" href="images/fevicon.png" type="image/gif" />
+    <link rel="icon" href="src/main/resources/static/vendor/images/fevicon.png" type="image/gif" />
     <link rel="stylesheet" href="${basePath}/vendor/css/jquery.mCustomScrollbar.min.css">
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -22,18 +22,18 @@
                         <!-- The slideshow -->
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="images/slider_1.png" alt="#" />
+                                <img src="src/main/resources/static/vendor/images/slider_1.png" alt="#" />
                             </div>
                             <div class="carousel-item">
-                                <img src="images/slider_1.png" alt="#" />
+                                <img src="src/main/resources/static/vendor/images/slider_1.png" alt="#" />
                             </div>
                         </div>
                         <!-- Left and right controls -->
                         <a class="carousel-control-prev" href="#slider_main" data-slide="prev">
-                            <i class="fa fa-angle-left" aria-hidden="true"></i>
+                            <i class="fa fa-angle-left"  aria-hidden="true" style="color: black"><</i>
                         </a>
                         <a class="carousel-control-next" href="#slider_main" data-slide="next">
-                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            <i class="fa fa-angle-right" aria-hidden="true" style="color: black">></i>
                         </a>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <img src="images/marketing_img.png" alt="#" />
+                <img src="src/main/resources/static/vendor/images/marketing_img.png" alt="#" />
             </div>
             <div class="col-md-6">
                 <div class="full blog_cont">
@@ -91,11 +91,11 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-6">
-                <a href="#"><img src="images/footer_logo.png" alt="#" /></a>
+                <a href="#"><img src="src/main/resources/static/vendor/images/footer_logo.png" alt="#" /></a>
                 <ul class="contact_information">
-                    <li><span><img src="images/location_icon.png" alt="#" /></span><span class="text_cont">London 145<br>United Kingdom</span></li>
-                    <li><span><img src="images/phone_icon.png" alt="#" /></span><span class="text_cont">987 654 3210<br>987 654 3210</span></li>
-                    <li><span><img src="images/mail_icon.png" alt="#" /></span><span class="text_cont">demo@gmail.com<br>support@gmail.com</span></li>
+                    <li><span><img src="src/main/resources/static/vendor/images/location_icon.png" alt="#" /></span><span class="text_cont">London 145<br>United Kingdom</span></li>
+                    <li><span><img src="src/main/resources/static/vendor/images/phone_icon.png" alt="#" /></span><span class="text_cont">987 654 3210<br>987 654 3210</span></li>
+                    <li><span><img src="src/main/resources/static/vendor/images/mail_icon.png" alt="#" /></span><span class="text_cont">demo@gmail.com<br>support@gmail.com</span></li>
                 </ul>
                 <ul class="social_icon">
                     <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -122,10 +122,10 @@
                 <div class="footer_links">
                     <h3>Instagram</h3>
                     <ol>
-                        <li><img class="img-responsive" src="images/footer_blog.png" alt="#" /></li>
-                        <li><img class="img-responsive" src="images/footer_blog.png" alt="#" /></li>
-                        <li><img class="img-responsive" src="images/footer_blog.png" alt="#" /></li>
-                        <li><img class="img-responsive" src="images/footer_blog.png" alt="#" /></li>
+                        <li><img class="img-responsive" src="src/main/resources/static/vendor/images/footer_blog.png" alt="#" /></li>
+                        <li><img class="img-responsive" src="src/main/resources/static/vendor/images/footer_blog.png" alt="#" /></li>
+                        <li><img class="img-responsive" src="src/main/resources/static/vendor/images/footer_blog.png" alt="#" /></li>
+                        <li><img class="img-responsive" src="src/main/resources/static/vendor/images/footer_blog.png" alt="#" /></li>
                     </ol>
                 </div>
             </div>
