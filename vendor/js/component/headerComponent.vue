@@ -1,7 +1,6 @@
 <template>
   <div class="header">
     <div class="logo">
-      logo
     </div>
     <router-link to="/" tag="a">Anasayfa</router-link>
     <router-link to="/user" tag="a">User</router-link>
@@ -18,36 +17,31 @@ export default {
 </script>
 
 <style scoped>
-  .header{
-    float: left;
-    position: fixed;
-    width: 200px;
-    background: #DADDE2;
-    height: 90%;
-  }
-  .header a{
-    width: 100px;
+  .header {
     float: left;
     position: relative;
-    background: #DADDE2;
-    color: #43655A;
-    font-size: 15px;
-    font-weight: bold;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 45px;
-    padding-right: 45px;
-    margin-left: 5px;
-    margin-right: 5px;
-    border-bottom: 1px solid whitesmoke;
-  }
-  .header a:hover{
-    background: #43655A;
-    color: white;
+    width: 15%;
+    background-color: #42444e;
+    height: 100%;
   }
   .header .logo{
     width: 100%;
-    background: #43655A;
-    height: 50px;
+    background-image: url("https://via.placeholder.com/150");
+    height: 75px;
+  }
+  .header a{
+    margin-left: 40px;
+    padding-left: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: 40px;
+    float: left;
+    font-size: 17px;
+    width: calc(100% - 80px);
+    color: whitesmoke;
+    border-bottom: 1px solid whitesmoke;
+    border-top: 1px solid whitesmoke;
+
+
   }
 </style>

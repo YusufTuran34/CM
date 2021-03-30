@@ -1,13 +1,14 @@
 <template>
   <div>
     <input ref="file" type="file" style="display: none;" @change="onChange($event)" class="form-control">
-    <button  class="btn btn-outline-secondary " type="button" @click="$refs.file.click()">Resim Seç</button>
+    <button  class="btn btn-outline-secondary " type="button" @click="$refs.file.click()">{{ btnName }}</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "addImage",
+  props:['btn-name'],
   data: function () {
     return {
       selectedImage: null

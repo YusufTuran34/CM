@@ -1,8 +1,7 @@
-
 <template>
   <div>
     <div class="aside">
-      <div class="open-close-trigger" @click="editPageView = !editPageView">Aç Kapa</div>
+      <div class="open-close-trigger" @click="editPageView = !editPageView">Menü</div>
       <div v-if="editPageView && selectedItem == null && readyForAddElement == null">
         <section>
           <label>Grid System</label>
@@ -31,10 +30,10 @@
           <div @click="addElement(models.recentPost)"> Recent Post </div>
           <div @click="addElement(models.blogList)"> Blog List </div>
         </section>
-        <section>
-<!--          <div class="deleteEnable" @click="deleteModeTrigger"> Delete  </div>-->
-<!--          <div class="updateEnable" @click="update"> Update  </div>-->
-        </section>
+<!--        <section>-->
+<!--&lt;!&ndash;          <div class="deleteEnable" @click="deleteModeTrigger"> Delete  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="updateEnable" @click="update"> Update  </div>&ndash;&gt;-->
+<!--        </section>-->
       </div>
     </div>
 
@@ -171,7 +170,7 @@ export default {
       }
       item.element = elements;
       this.$store.state.element = null;
-
+      this.editPageView = false;
     },
 
     // deleteModeTrigger(){
@@ -246,12 +245,6 @@ export default {
       return this.$store.state.element
     },
   },
-  mounted() {
-    $("#summernote").summernote({
-      tabsize: 2,
-      height: 400
-    });
-  }
 }
 </script>
 
@@ -261,6 +254,8 @@ export default {
     border: 1px solid black;
     z-index: 9999;
     background: #f4f4f4;
+    margin: 5px;
+    padding: 10px;
 
   }
   .aside .deleteEnable{
@@ -281,14 +276,14 @@ export default {
     border: 4px solid red;
     text-align: center;
   }
-  .aside div{
+  .aside section div{
     width: 100%;
     margin: 2px;
   }
-  .aside div::before {
+  .aside section div::before {
     content: "-   ";
   }
-  .aside label{
+  .aside section label{
     width: 100%;
     border-bottom: 1px solid red;
   }

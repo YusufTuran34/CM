@@ -5,9 +5,10 @@
         <div class="modal-header">
         </div>
         <div class="modal-body">
-          <div v-for="urlObj in urlList">
+          <div v-for="(urlObj,index) in urlList">
             <input v-model="urlObj.url">
             <input v-model="urlObj.name">
+            <span @click="removeUrl(index)">-</span>
           </div>
           <span @click="addUrlList">+</span>
 
@@ -28,7 +29,10 @@ export default {
   methods:{
     addUrlList(){
       this.urlList.push({'url':'/','name':''})
-    }
+    },
+    removeUrl(index){
+      this.urlList.splice(index,1);
+    },
   },
 }
 </script>

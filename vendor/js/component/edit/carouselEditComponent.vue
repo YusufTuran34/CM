@@ -1,16 +1,19 @@
 <template>
   <div id="input-carousel-popup" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
         </div>
         <div class="modal-body">
           <div class="row">
             <div class="col-sm-6">
-              <div v-for="image in selectedImagesObj">
-                <img :src="image" alt="resim">
+              <div v-for="(image,index) in selectedImagesObj">
+                <img style="height: 100px;width: 100px" :src="image" alt="resim">
+                <button @click="deleteFile(index)">Sil</button>
+                <add-image :btn-name="'Güncelle'" @file-change="selectedImagesChange($event,index)"></add-image>
               </div>
-              <add-image @file-change="selectedImagesChange"></add-image>
+              <label>Yeni Ekleme</label>
+              <add-image :btn-name="'Ekle'" @file-change="fileAdd"></add-image>
             </div>
             <div class="col-sm-6">
               <div id="summernoteCarousel"></div>
@@ -33,9 +36,16 @@ export default {
   props:['selectedImages'],
   components: {AddImage},
   methods:{
-    selectedImagesChange(file){
-      this.selectedImagesObj.push(file);
+    deleteFile(index){
+      this.selectedImages.splice(index,1);
     },
+    fileAdd(file){
+      this.selectedImages.push(file);
+    },
+    selectedImagesChange(file,index){
+      this.$set(this.selectedImages,index,file)
+    },
+
     saveCarousel(){
       this.$emit('click-item',this.selectedImagesObj,$("#summernoteCarousel").summernote('code'))
     }
