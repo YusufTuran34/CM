@@ -1,5 +1,27 @@
 <template>
   <div>
+
+    <div class="page-settings-wrapper">
+      <div class="select">
+        <select name="slct" v-model="selectedPage">
+          <option :value="JSON.parse(JSON.stringify(defaultPageValue))">Yeni Sayfa Yarat</option>
+        </select>
+      </div>
+      <div v-if="selectedPage != null">
+        <div class='full-input'>
+          <label>Url</label>
+          <input v-model="selectedPage.url" placeholder="Url">
+        </div>
+        <div class='full-input'>
+          <label>Title</label>
+          <input v-model="selectedPage.title" placeholder="Title">
+        </div>
+        <seo-component v-model="selectedPage.seo"></seo-component>
+        <button class="btn btn-process" v-if="selectedPage.id == 0">Kaydet</button>
+        <button class="btn btn-info"    v-if="selectedPage.id != 0">Güncelle</button>
+      </div>
+    </div>
+
     <div class="aside">
       <div class="open-close-trigger" @click="editPageView = !editPageView">Menü</div>
       <div class="cancel-ready-element" v-if="readyForAddElement != null" @click="dropReadyForAddElement">Seçimi iptal et </div>
@@ -42,12 +64,13 @@
       <div :class="[readyForAddElement != null ? 'preview-active' : 'preview']">
         <header-component></header-component>
         <div style="background: white;position: relative;float: left;min-height: 300px;width: 100%">
-          <html-object :elements="elements"
+          <html-object v-if="selectedPage != null" :elements="selectedPage.content.html_desktop"
                        @slider-change="elementChange"
                        @src-change="elementChange"
                        @css-change="elementChange"
                        @text-change="elementChange"
                        @bread-crumb-change="elementChange"
+                       @blog-list-change ="elementChange"
 
                        @remove-item="removeItem"
                        @click-item="clickedItem"></html-object>
@@ -55,6 +78,7 @@
         <footer-component></footer-component>
       </div>
     </div>
+
 
     <div id="div-edit-css-popup" class="modal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
@@ -71,13 +95,13 @@
         </div>
       </div>
     </div>
-
     <input-edit-component       @click-item="inputEditChange"      v-if="selectedItem != null && selectedItem.text != null"       :selected-item="selectedItem"></input-edit-component>
     <img-edit-component         @click-item="imgEditChange"        v-if="selectedItem != null && selectedItem.src != null"        :selected-item="selectedItem"></img-edit-component>
     <legend-edit-component      @click-item="legendChange"         v-if="selectedItem != null && selectedItem.el == 'summernote'" :selected-item="selectedItem"></legend-edit-component>
+    <blog-post-list-component   @click-item="blogListEditChange"   v-if="selectedItem != null && selectedItem.el == 'blogList'"   :selected-item="selectedItem"></blog-post-list-component>
+
     <carousel-edit-component    @click-item="carouselEditChange"   v-if="selectedItem != null && selectedItem.el == 'slider'"     :selected-images="selectedItem.slider.imageList" :html="selectedItem.html"></carousel-edit-component>
     <bread-crumb-edit-component @click-item="breadCrumbEditChange" v-if="selectedItem != null && selectedItem.el == 'breadCrumb'" :url-list="selectedItem.urlList"></bread-crumb-edit-component>
-
   </div>
 </template>
 
@@ -93,10 +117,14 @@ import ImgEditComponent from "./edit/imgEditComponent";
 import CarouselEditComponent from "./edit/carouselEditComponent";
 import LegendEditComponent from "./edit/legendEditComponent";
 import BreadCrumbEditComponent from "./edit/breadcrumbEditComponent";
+import BlogPostListComponent from "./ui/blog/blogPostListComponent";
+import SeoComponent from "./general/seoComponent";
 
 export default {
   name: "pagesComponent",
   components: {
+    SeoComponent,
+    BlogPostListComponent,
     BreadCrumbEditComponent,
     LegendEditComponent,
     CarouselEditComponent,
@@ -110,16 +138,25 @@ export default {
   },
   data:function (){
     return {
-      elements : [
-        {
-          "el"          : "div",
-          "class"       : "container",
-          "css"         : "",
-          "subElement"  : [
-
+      selectedPage : null,
+      defaultPageValue : {
+        id:0,
+        title:'',
+        url:'',
+        seo:{},
+        blogList : [],
+        content:{
+          html_desktop:[
+              {
+                "el"          : "div",
+                "class"       : "container",
+                "css"         : "",
+                "subElement"  : []
+              }
           ]
+          ,html_mini:''
         }
-      ],
+      },
       models :Models,
 
       selectedItem : null,
@@ -159,20 +196,6 @@ export default {
       this.$store.state.element = null;
       this.editPageView = false;
     },
-
-    // deleteModeTrigger(){
-    //   if(!this.$store.state.readyToDelete){
-    //     setTimeout(function (){
-    //       //FOR CSS
-    //       setTimeout(function (){
-    //         $($(".preview span")[0]).hide();
-    //         $($(".preview span")[1]).hide();
-    //         $($(".preview span")[2]).hide();
-    //       },100)
-    //     },100)
-    //   }
-    //   this.$store.state.readyToDelete = !this.$store.state.readyToDelete;
-    // },
     removeItem(item){
       item = null;
     },
@@ -191,6 +214,8 @@ export default {
         $("#input-carousel-popup").modal('show');
       }else if(item.el == 'div'){
         $("#div-edit-css-popup").modal('show')
+      }else if(item.el == 'blogList'){
+        $("#blog-list-popup").modal('show')
       }
 
     },
@@ -224,6 +249,9 @@ export default {
       $("#input-bread-crumb-popup").modal('hide')
       this.selectedItem = null;
     },
+    blogListEditChange(){
+
+    }
     
   },
   computed: {
@@ -231,6 +259,9 @@ export default {
       return this.$store.state.element
     },
   },
+  mounted() {
+    this.selectedPage = this.defaultPageValue;
+  }
 }
 </script>
 
@@ -334,5 +365,76 @@ export default {
     border: 1px solid black;
     float: left;
     position: relative;
+  }
+
+
+
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0 !important;
+    background: #ffffff;
+    background-image: none;
+    border-radius: 0;
+    color: black;
+  }
+  select::-ms-expand {
+    display: none;
+  }
+  .select {
+    position: relative;
+    display: flex;
+    width: 256px;
+    height: 3em;
+    line-height: 3;
+    background: #fdfdfd;
+    overflow: hidden;
+    border-radius: .25em;
+    border: 2px solid grey;
+  }
+  select {
+    flex: 1;
+    padding: 0 .5em;
+    cursor: pointer;
+  }
+  .select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 1em;
+    background: #fdfdfd;
+    border-left: 1px solid black;
+    cursor: pointer;
+    pointer-events: none;
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+  }
+  .select:hover::after {
+    color: #f39c12;
+  }
+  .selected-navbar{
+    /*margin-top: 0px;*/
+    width: 300px;
+  }
+
+  .full-input {
+    display: inline-block;
+    padding: 3px;
+    border: 2px solid grey;
+    margin-top: 5px;
+  }
+  input {
+    outline: none;
+    border: none;
+    display:block;
+    line-height: 1.2em;
+    font-size: 14pt;
+    width: 250px;
   }
 </style>

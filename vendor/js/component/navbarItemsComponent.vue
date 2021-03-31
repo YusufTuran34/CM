@@ -143,3 +143,6 @@ export default {
     background: #f4f4f4;
   }
 </style>
+
+
+[{'el':'div','class':'container','css':'','subElement':[]}]

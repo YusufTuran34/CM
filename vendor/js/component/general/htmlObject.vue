@@ -20,6 +20,7 @@
                      @remove-item="$emit('remove-item', $event)"
                      @text-change="$emit('text-change', $event)"
                      @slider-change ="$emit('slider-change',$event)"
+                     @blog-list-change ="$emit('blog-list-change',$event)"
                      @bread-crumb-change="$emit('bread-crumb-change',$event)"></html-object>
       </div>
       <img @dblclick="$emit('src-change', element)"
@@ -32,7 +33,7 @@
               v-if="element.el == 'legend' && element.html != null" v-html="element.html"></legend>
 
       <carousel-component v-if="element.el == 'slider'" :slider="element.slider" :preview="false" v-on:click.native="$emit('slider-change',element)"></carousel-component>
-      <blog-post-list-component v-if="element.el == 'blogList'" :blog-list="element.blogList" :page-url="element.pageUrl"></blog-post-list-component>
+      <blog-post-list-component v-if="element.el == 'blogList'" :blog-list="element.blogList" :page-url="element.pageUrl" v-on:click.native="$emit('blog-list-change',element)"></blog-post-list-component>
       <recent-post v-if="element.el == 'recentpost'" :recent-post-list="element.blogList"></recent-post>
       <bulten-component v-if="element.el == 'bulten'"></bulten-component>
       <bread-crumb-component v-if="element.el == 'breadCrumb'" :bread-crumb-page-list="element.urlList" v-on:click.native="$emit('bread-crumb-change',element)"></bread-crumb-component>
